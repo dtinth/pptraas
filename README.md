@@ -23,3 +23,12 @@ gcloud beta functions deploy screenshotter --gen2 \
   --trigger-http --entry-point=screenshotter \
   --source=.
 ```
+
+## Differences from [personal-puppeteer](https://github.com/dtinth/personal-puppeteer)
+
+| `personal-puppeteer`                                               | `screenshotter`                                              |
+| ------------------------------------------------------------------ | ------------------------------------------------------------ |
+| Deployed to Vercel                                                 | Deployed to Google Cloud Functions                           |
+| Generates a public, signed URL that can be used as an image source | No public endpoint; only authenticated requests are accepted |
+| Result is cached by Vercel’s CDN                                   | No caching                                                   |
+| Accepts a URL and options                                          | Accepts raw JavaScript code                                  |
