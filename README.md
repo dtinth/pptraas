@@ -20,6 +20,17 @@ gcloud beta functions deploy screenshotter --gen2 \
   --source=.
 ```
 
+## Usage
+
+```sh
+SERVICE_URI=$(gcloud beta functions describe screenshotter --gen2 --format=json | jq -r '.serviceConfig.uri')
+ID_TOKEN=$(gcloud auth print-identity-token)
+curl -X POST -H "Authorization: Bearer $ID_TOKEN" -H "Content-Type: application/json" \
+  -d '{"code":"(async ()=>{await page.setViewport({width:1280,height:720});await page.goto(\"https://www.example.com\")})()"}' \
+  -o /tmp/output.png \
+  $SERVICE_URI
+```
+
 ## Differences from [personal-puppeteer](https://github.com/dtinth/personal-puppeteer)
 
 | `personal-puppeteer`                                               | `screenshotter`                                              |
