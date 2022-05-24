@@ -4,16 +4,12 @@ A Google Cloud Function (gen 2) that runs a Puppeteer script and takes a screens
 
 ## How to deploy
 
-Before the first deployment, you have to set up some settings in the shell.
-
-<details><summary>Shell setup</summary>
+Before the first deployment, some settings has to be configured in the shell.
 
 ```sh
 gcloud config set project $PROJECT_ID
 gcloud config set functions/region asia-northeast1
 ```
-
-</details>
 
 Then this command will deploy the function.
 
