@@ -1,6 +1,6 @@
 # screenshotter
 
-A Google Cloud Function (gen 2) that runs a Puppeteer script and takes a screenshot of a webpage.
+A Google Cloud Function (gen 2) service that runs a Puppeteer script and takes a screenshot of a webpage.
 
 ## How to deploy
 
