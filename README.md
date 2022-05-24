@@ -22,12 +22,24 @@ gcloud beta functions deploy screenshotter --gen2 \
 
 ## Usage
 
+You have to [make an authenticated request to the function](https://cloud.google.com/functions/docs/securing/authenticating), passing these 2 parameters in the JSON POST body:
+
+- `code` The code of the Puppeteer script to run.
+- `type` The output format, `png` or `jpeg`.
+
+Here is an example of invoking the function from a shell script:
+
 ```sh
+# Obtain the URL to the deployed function
 SERVICE_URI=$(gcloud beta functions describe screenshotter --gen2 --format=json | jq -r '.serviceConfig.uri')
+
+# Obtain the ID token required to invoke the function
 ID_TOKEN=$(gcloud auth print-identity-token)
+
+# Invoke the function
 curl -X POST -H "Authorization: Bearer $ID_TOKEN" -H "Content-Type: application/json" \
   -d '{"code":"(async ()=>{await page.setViewport({width:1280,height:720});await page.goto(\"https://www.example.com\")})()"}' \
-  -o /tmp/output.png \
+  -o output.png \
   $SERVICE_URI
 ```
 
