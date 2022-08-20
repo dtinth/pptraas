@@ -29,3 +29,23 @@ functions.http('screenshotter', async (req, res) => {
     console.error(error)
   }
 })
+
+require('fs').writeFileSync(
+  `${process.env.HOME}/.fonts.conf`,
+  `<?xml version='1.0'?>
+<!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
+<fontconfig>
+  <alias>
+    <family>sans-serif</family>
+    <prefer>
+      <family>Liberation Sans</family>
+    </prefer>
+  </alias>
+  <alias>
+    <family>monospace</family>
+    <prefer>
+      <family>Liberation Mono</family>
+    </prefer>
+  </alias>
+</fontconfig>`,
+)
