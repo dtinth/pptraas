@@ -8,13 +8,12 @@ Before the first deployment, some settings has to be configured in the shell.
 
 ```sh
 gcloud config set project $PROJECT_ID
-gcloud config set functions/region asia-northeast1
 ```
 
 Then this command will deploy the function.
 
 ```sh
-gcloud beta functions deploy screenshotter --gen2 \
+gcloud beta functions deploy screenshotter --region=asia-northeast1 --gen2 \
   --runtime=nodejs16 --memory=512MB \
   --trigger-http --entry-point=screenshotter \
   --source=.
