@@ -35,6 +35,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Nixpacks
+        run: curl -sSL https://nixpacks.com/install.sh | bash
+
       - name: Build image with Nixpacks
         run: nixpacks build . --name pptraas
 
