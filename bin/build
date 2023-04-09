@@ -1,0 +1,2 @@
+#!/bin/bash -e
+nixpacks build . --name pptraas

@@ -1,6 +1,17 @@
 {
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.1.2",
-    "puppeteer": "^16.2.0"
+    "fastify": "^4.15.0",
+    "puppeteer": "^19.8.5"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "start": "node index.mjs",
+    "build": "node node_modules/puppeteer/install.js"
+  },
+  "packageManager": "pnpm@8.1.1",
+  "devDependencies": {
+    "@types/node": "^18.15.11"
   }
 }

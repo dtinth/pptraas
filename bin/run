@@ -1,0 +1,2 @@
+#!/bin/bash -e
+docker run --init -ti --rm -p 20279:20279 pptraas
