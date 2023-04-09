@@ -29,6 +29,17 @@ const fastify = Fastify({ logger: true })
 let browser
 
 fastify.post('/run', async (request, reply) => {
+  const body = /** @type {Record<string, string | undefined>} */ (
+    request.body || {}
+  )
+
+  if (process.env.API_KEY) {
+    if (body.apiKey !== process.env.API_KEY) {
+      reply.code(401)
+      return { error: 'Unauthorized' }
+    }
+  }
+
   let pageCreated = false
   try {
     if (!browser) {
@@ -40,9 +51,6 @@ fastify.post('/run', async (request, reply) => {
     pageCreated = true
     try {
       const fn = new Function('ctx', 'code', 'with(ctx){return eval(code)}')
-      const body = /** @type {Record<string, string | undefined>} */ (
-        request.body || {}
-      )
       const code = body.code
       const type = body.type || 'png'
       const result = await fn({ page, req: request }, code)
