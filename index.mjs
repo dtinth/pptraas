@@ -36,7 +36,13 @@ fastify.post('/run', async (request, reply) => {
   if (process.env.API_KEY) {
     if (body.apiKey !== process.env.API_KEY) {
       reply.code(401)
-      return { error: 'Unauthorized' }
+      return {
+        error: {
+          message: 'Unauthorized',
+          code: -32001,
+          data: { code: 'UNAUTHORIZED' },
+        },
+      }
     }
   }
 
@@ -50,15 +56,15 @@ fastify.post('/run', async (request, reply) => {
     const page = await browser.newPage()
     pageCreated = true
     try {
-      const fn = new Function('ctx', 'code', 'with(ctx){return eval(code)}')
+      const fn = new Function('__ctx', 'code', 'with(__ctx){return eval(code)}')
       const code = body.code
       const type = body.type || 'png'
-      const result = await fn({ page, req: request }, code)
+      const result = await fn({ page, request, reply }, code)
       if (Buffer.isBuffer(result)) {
         reply.type(type === 'png' ? 'image/png' : 'image/jpeg')
         return result
       } else {
-        return result
+        return { result: { data: result } }
       }
     } finally {
       await page.close()
@@ -74,7 +80,14 @@ fastify.post('/run', async (request, reply) => {
     fastify.log.error(error)
     reply.code(500)
     return {
-      error: String(error?.stack || error),
+      error: {
+        message: error?.message || String(error),
+        code: -32603,
+        data: {
+          code: 'INTERNAL_SERVER_ERROR',
+          stack: String(error?.stack || error),
+        },
+      },
     }
   }
 })
