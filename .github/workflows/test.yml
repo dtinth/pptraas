@@ -34,7 +34,8 @@ jobs:
         run: docker run --init -d -p 20279:20279 --env API_KEY=dummy --name pptraas pptraas
 
       - name: Wait for container to start
-        run: npx wait-on http://localhost:20279
+        run: npx wait-on localhost:20279
+        timeout-minutes: 1
 
       - name: Run tests
         run: node test.mjs
