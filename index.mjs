@@ -1,32 +1,33 @@
 // @ts-check
 
 import Fastify from 'fastify'
-import { writeFileSync } from 'fs'
+import { symlinkSync, existsSync } from 'fs'
 import puppeteer from 'puppeteer'
 
-writeFileSync(
-  `${process.env.HOME}/.fonts.conf`,
-  `<?xml version='1.0'?>
-<!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
-<fontconfig>
-  <alias>
-    <family>sans-serif</family>
-    <prefer>
-      <family>Liberation Sans</family>
-    </prefer>
-  </alias>
-  <alias>
-    <family>monospace</family>
-    <prefer>
-      <family>Liberation Mono</family>
-    </prefer>
-  </alias>
-</fontconfig>`,
-)
+/**
+ * @param {string} a
+ * @param {string} b
+ */
+function lnS(a, b) {
+  try {
+    if (!existsSync(b)) {
+      symlinkSync(a, b)
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+lnS('/app/.fonts', '/root/.fonts')
+lnS('/app/.fonts.conf', '/root/.fonts.conf')
 
 const fastify = Fastify({ logger: true })
 
 let browser
+
+fastify.get('/', async (request, reply) => {
+  return 'pptraas'
+})
 
 fastify.post('/run', async (request, reply) => {
   const body = /** @type {Record<string, string | undefined>} */ (
