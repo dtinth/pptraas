@@ -1,2 +1,6 @@
 #!/bin/bash -e
-docker run --init -ti --rm -p 20279:20279 --env API_KEY=dummy pptraas
+docker run --init -ti --rm -p 20279:20279 --env API_KEY=dummy --name pptraas \
+  -v "$PWD/.fonts:/app/.fonts:ro" \
+  -v "$PWD/.fonts.conf:/app/.fonts.conf:ro" \
+  -v "$PWD/index.mjs:/app/index.mjs:ro" \
+  pptraas

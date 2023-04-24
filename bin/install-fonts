@@ -1,0 +1,4 @@
+#!/bin/bash -e
+# This script should download and install fonts into `.fonts` directory
+
+wget https://github.com/cadsondemak/Sarabun/archive/master.tar.gz -O- | tar xvz -C .fonts --strip-components=2 --wildcards '*.ttf'
