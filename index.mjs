@@ -25,6 +25,10 @@ const fastify = Fastify({ logger: true })
 
 let browser
 
+fastify.get('/', async (request, reply) => {
+  return 'pptraas'
+})
+
 fastify.post('/run', async (request, reply) => {
   const body = /** @type {Record<string, string | undefined>} */ (
     request.body || {}

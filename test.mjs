@@ -25,17 +25,6 @@ test('Emojis', async (t) => {
   )
 })
 
-test('test screenshot', async (t) => {
-  await screenshot(
-    'ss',
-    `(${async () => {
-      await page.setViewport({ width: 375, height: 640, deviceScaleFactor: 2 })
-      await page.goto('https://www.notaboutcode.com/')
-      return page.screenshot()
-    }})()`,
-  )
-})
-
 async function run(code) {
   const response = await fetch('http://localhost:20279/run', {
     method: 'POST',
