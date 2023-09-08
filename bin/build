@@ -1,2 +1,2 @@
 #!/bin/bash -e
-nixpacks build . --name pptraas --env NIXPACKS_APT_PKGS="fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros fonts-kacst fonts-freefont-ttf libxss1 fonts-liberation fonts-noto fonts-noto-color-emoji"
+nixpacks build . --name pptraas --env NIXPACKS_APT_PKGS="fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-khmeros fonts-kacst fonts-freefont-ttf libxss1 fonts-liberation fonts-noto fonts-noto-color-emoji" "$@"
