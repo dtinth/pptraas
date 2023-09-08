@@ -43,7 +43,8 @@ jobs:
         run: curl -sSL https://nixpacks.com/install.sh | bash
 
       - name: Build image with Nixpacks
-        run: ./bin/build --platform linux/amd64,linux/arm64
+        run: ./bin/build
+        # run: ./bin/build --platform linux/amd64,linux/arm64 # ERROR: Multiple platforms feature is currently not supported for docker driver. Please switch to a different driver (eg. "docker buildx create --use")
 
       - name: View image history
         run: docker history pptraas
