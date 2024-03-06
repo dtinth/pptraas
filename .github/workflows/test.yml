@@ -40,6 +40,9 @@ jobs:
       - name: Run tests
         run: node test.mjs
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Percy
         run: pnpx @percy/cli upload .data/screenshots/
         env:
