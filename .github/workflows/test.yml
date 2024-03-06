@@ -40,6 +40,11 @@ jobs:
       - name: Run tests
         run: node test.mjs
 
+      - name: Percy
+        run: pnpx @percy/cli upload .data/screenshots/
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
       - name: Print container logs
         if: always()
         run: docker logs pptraas
