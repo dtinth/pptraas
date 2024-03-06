@@ -40,6 +40,17 @@ jobs:
       - name: Run tests
         run: node test.mjs
 
+      - name: Render PDFs to PNGs
+        run: ./bin/render-pdfs
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Percy
+        run: pnpx @percy/cli upload .data/screenshots/
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
       - name: Print container logs
         if: always()
         run: docker logs pptraas
