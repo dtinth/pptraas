@@ -25,6 +25,63 @@ test('Emojis', async (t) => {
   )
 })
 
+test('pdf', async (t) => {
+  const html = `
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <style>
+        html, body {
+          margin: 0;
+          padding: 0;
+        }
+        .page {
+          page-break-after: always;
+          width: 100vw;
+          height: 100vh;
+          position: relative;
+          overflow: hidden;
+        }
+        .page-content {
+          position: absolute;
+          inset: 1cm;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 48px;
+          border: 2mm solid black;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="page">
+        <div class="page-content">Page 1</div>
+      </div>
+      <div class="page">
+        <div class="page-content">Page 2</div>
+      </div>
+      <div class="page">
+        <div class="page-content">Page 3</div>
+      </div>
+    </body>
+  </html>
+  `
+  const response = await run(
+    `(${async (html) => {
+      await page.goto(
+        `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
+      )
+      return page.pdf({ format: 'A4' })
+    }})(${JSON.stringify(html)})`,
+  )
+  assert(response.ok, `HTTP ${response.status} ${response.statusText}`)
+  const buffer = await response.arrayBuffer()
+  const pdf = Buffer.from(buffer)
+  mkdirSync('.data/screenshots', { recursive: true })
+  writeFileSync('.data/screenshots/meow.pdf', pdf)
+})
+
 async function run(code) {
   const response = await fetch('http://localhost:20279/run', {
     method: 'POST',
