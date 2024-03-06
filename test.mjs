@@ -79,7 +79,7 @@ test('pdf', async (t) => {
   const buffer = await response.arrayBuffer()
   const pdf = Buffer.from(buffer)
   mkdirSync('.data/screenshots', { recursive: true })
-  writeFileSync('.data/screenshots/meow.pdf', pdf)
+  writeFileSync('.data/screenshots/pdf-example.pdf', pdf)
 })
 
 async function run(code) {
