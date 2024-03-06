@@ -40,6 +40,9 @@ jobs:
       - name: Run tests
         run: node test.mjs
 
+      - name: Render PDFs to PNGs
+        run: ./bin/render-pdfs
+
       - name: Enable corepack
         run: corepack enable
 

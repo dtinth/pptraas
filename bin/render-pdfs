@@ -1,0 +1,5 @@
+#!/bin/bash -e
+for I in .data/screenshots/*.pdf
+do
+  docker run -v $PWD/.data/screenshots:/data/.data/screenshots ghcr.io/elswork/poppler-utils:22.05.0 pdftoppm -png /data/$I /data/"$I"_page
+done
