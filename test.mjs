@@ -69,9 +69,7 @@ test('pdf', async (t) => {
   `
   const response = await run(
     `(${async (html) => {
-      await page.goto(
-        `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
-      )
+      await page.setContent(html)
       return page.pdf({ format: 'A4' })
     }})(${JSON.stringify(html)})`,
   )
