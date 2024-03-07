@@ -36,3 +36,46 @@ node test.mjs
 ```
 
 This will generate render output in the `.data/screenshots` directory.
+
+## Usage
+
+Make a `POST` request to the `/run` endpoint with the following JSON body:
+
+- `code` (string): The Puppeteer script to run. It has access to the variable `page` which is a [Puppeteer `Page` object](https://pptr.dev/api/puppeteer.page). Note that `await` isn’t supported. If you want to use `await`, wrap it inside an immediately-invoked async function.
+- `apiKey` (string): When running locally using the `bin/run` script, the API key is `dummy`.
+
+If the function call results in a buffer, it will be returned directly. Otherwise, the result will be JSON-encoded and available as `result.data` in the response.
+
+Example usage:
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "page.goto(\"https://example.com\").then(() => page.screenshot())",
+    "apiKey": "dummy"
+  }' \
+  -o example.png \
+  http://localhost:20279/run
+```
+
+<details><summary>View result</summary>
+
+> ![Example result](example.png)
+
+</details>
+
+For more examples, see the tests in the [`test.mjs`](test.mjs) file.
+
+## Deploying
+
+This service can be deployed to any container platform that supports Docker images. The images are available here:
+
+- [`ghcr.io/dtinth/pptraas`](https://github.com/dtinth/pptraas/pkgs/container/pptraas)
+- [`dtinth/pptraas`](https://hub.docker.com/r/dtinth/pptraas)
+
+If you specify an `API_KEY` environment variable, the service will require an API key to be passed in the request body as the `apiKey` field.
+
+```
+
+```
