@@ -75,7 +75,3 @@ This service can be deployed to any container platform that supports Docker imag
 - [`dtinth/pptraas`](https://hub.docker.com/r/dtinth/pptraas)
 
 If you specify an `API_KEY` environment variable, the service will require an API key to be passed in the request body as the `apiKey` field.
-
-```
-
-```
