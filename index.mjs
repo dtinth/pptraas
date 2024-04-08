@@ -1,7 +1,7 @@
 // @ts-check
 
 import Fastify from 'fastify'
-import { symlinkSync, existsSync } from 'fs'
+import { existsSync, symlinkSync } from 'fs'
 import puppeteer from 'puppeteer'
 
 /**
@@ -50,8 +50,9 @@ fastify.post('/run', async (request, reply) => {
   let pageCreated = false
   try {
     if (!browser) {
+      const fontRenderHinting = process.env.FONT_RENDER_HINTING || 'none'
       browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--font-render-hinting=none'],
+        args: ['--no-sandbox', `--font-render-hinting=${fontRenderHinting}`],
       })
     }
     const page = await browser.newPage()
