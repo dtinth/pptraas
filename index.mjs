@@ -56,7 +56,7 @@ fastify.post('/run', async (request, reply) => {
         args: ['--no-sandbox', `--font-render-hinting=${fontRenderHinting}`],
       })
     }
-    context = await browser.createIncognitoBrowserContext()
+    context = await browser.createBrowserContext()
     const page = await context.newPage()
     pageCreated = true
     try {
