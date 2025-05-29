@@ -5,13 +5,16 @@ import test from 'node:test'
 const apiKey = 'dummy'
 
 test('hello world', async (t) => {
-  await screenshotHtml('hello-world', '<h1>Hello World</h1>')
+  await screenshotHtml(
+    'hello-world',
+    '<body style="background: white"><h1>Hello World</h1>',
+  )
 })
 
 test('Thai language', async (t) => {
   await screenshotHtml(
     'thai-language',
-    `<h1>สวัสดีชาวโลก</h1>
+    `<body style="background: white"><h1>สวัสดีชาวโลก</h1>
   <pre>เป็นมนุษย์สุดประเสริฐเลิศคุณค่า กว่าบรรดาฝูงสัตว์เดรัจฉาน
 จงฝ่าฟันพัฒนาวิชาการ อย่าล้างผลาญฤๅเข่นฆ่าบีฑาใคร</pre>`,
   )
@@ -21,7 +24,7 @@ test('Emojis', async (t) => {
   await screenshotHtml(
     'emojis',
     // https://www.youtube.com/watch?v=TM93ntGYLGg
-    `<h1>😲🙌👾🤖🤸👺🌠🤲👻🖐️🛸😀</h1>`,
+    `<body style="background: white"><h1>😲🙌👾🤖🤸👺🌠🤲👻🖐️🛸😀</h1>`,
   )
 })
 
@@ -35,6 +38,7 @@ test('pdf', async (t) => {
         html, body {
           margin: 0;
           padding: 0;
+          background: white;
         }
         .page {
           page-break-after: always;
