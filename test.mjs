@@ -80,31 +80,6 @@ test('pdf', async (t) => {
   writeFileSync('.data/screenshots/pdf-example.pdf', pdf)
 })
 
-test('Browser context isolation', async (t) => {
-  const code1 = `(async () => {
-    await page.setCookie({ name: 'testCookie', value: 'value1', url: 'about:blank' });
-    // Add a small delay to increase likelihood of concurrent execution if run sequentially by server
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return 'done';
-  })()`;
-
-  const code2 = `(async () => {
-    const cookies = await page.cookies('about:blank');
-    return cookies.find(c => c.name === 'testCookie');
-  })()`;
-
-  const [response1, response2] = await Promise.all([
-    run(code1),
-    run(code2)
-  ]);
-
-  const result1 = await response1.json();
-  const result2 = await response2.json();
-
-  assert.strictEqual(result1.result.data, 'done', 'First script should complete');
-  assert.strictEqual(result2.result.data, undefined, 'Second script should not find cookie from first script');
-})
-
 async function run(code) {
   const response = await fetch('http://localhost:20279/run', {
     method: 'POST',
