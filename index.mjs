@@ -63,9 +63,8 @@ fastify.post('/run', async (request, reply) => {
       const fn = new Function('__ctx', 'code', 'with(__ctx){return eval(code)}')
       const code = body.code
       const type = body.type || 'png'
-      // @ts-ignore
       const result = await fn({ page, request, reply }, code)
-      if (Buffer.isBuffer(result)) {
+      if (Buffer.isBuffer(result) || result instanceof Uint8Array) {
         reply.type(type === 'png' ? 'image/png' : 'image/jpeg')
         return result
       } else {
@@ -74,7 +73,6 @@ fastify.post('/run', async (request, reply) => {
     } finally {
       await context.close()
     }
-  // @ts-ignore
   } catch (error) {
     if (!pageCreated) {
       // Consider the container failed if the page cannot be created
