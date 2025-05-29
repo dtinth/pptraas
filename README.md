@@ -15,6 +15,25 @@ Setting up a service that integrates with Puppeteer is quite a challenge. For ex
 
 This project aims to solve these issues, expose a simple API, and package all of that into a Docker image that you can deploy into serverless container platforms (like [Google Cloud Run](https://cloud.google.com/run/) or [Azure Container Apps](https://azure.microsoft.com/en-us/pricing/details/container-apps/)) or just run on your own server.
 
+## Security Model
+
+> [!WARNING]
+> **⚠️ This service executes arbitrary code sent in the request.**
+>
+> Furthermore, Puppeteer is configured to run with the `--no-sandbox` flag. This is necessary for it to function correctly in many containerized environments. However, running without the sandbox means that a malicious script could potentially escape the Puppeteer environment and gain access to the underlying system.
+>
+> **For these reasons, this service poses a significant security risk if exposed to untrusted users or content.**
+>
+> It is **strongly advised** that this service is intended for use in **trusted environments only** and **should not be publicly accessible**.
+
+Consider using it as an internal microservice for tasks like:
+
+*   Generating PDFs from trusted HTML sources.
+*   Rendering images or charts from trusted data.
+*   Automating interactions with trusted websites.
+
+Always ensure that any code or content processed by this service originates from a trusted source.
+
 ## Building image
 
 ```bash
