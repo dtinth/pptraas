@@ -47,6 +47,7 @@ fastify.post('/run', async (request, reply) => {
     }
   }
 
+  let context
   let pageCreated = false
   try {
     if (!browser) {
@@ -55,21 +56,22 @@ fastify.post('/run', async (request, reply) => {
         args: ['--no-sandbox', `--font-render-hinting=${fontRenderHinting}`],
       })
     }
-    const page = await browser.newPage()
+    context = await browser.createBrowserContext()
+    const page = await context.newPage()
     pageCreated = true
     try {
       const fn = new Function('__ctx', 'code', 'with(__ctx){return eval(code)}')
       const code = body.code
       const type = body.type || 'png'
       const result = await fn({ page, request, reply }, code)
-      if (Buffer.isBuffer(result)) {
+      if (Buffer.isBuffer(result) || result instanceof Uint8Array) {
         reply.type(type === 'png' ? 'image/png' : 'image/jpeg')
         return result
       } else {
         return { result: { data: result } }
       }
     } finally {
-      await page.close()
+      await context.close()
     }
   } catch (error) {
     if (!pageCreated) {
