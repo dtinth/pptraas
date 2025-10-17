@@ -94,3 +94,12 @@ This service can be deployed to any container platform that supports Docker imag
 - [`dtinth/pptraas`](https://hub.docker.com/r/dtinth/pptraas)
 
 If you specify an `API_KEY` environment variable, the service will require an API key to be passed in the request body as the `apiKey` field.
+
+To deploy to a VPS, this is an example `docker run` command:
+
+```sh
+docker run --init -d -p 20279:20279 --env API_KEY=dummy --name pptraas ghcr.io/dtinth/pptraas
+```
+
+> [!CAUTION]
+> Make sure to properly secure your deployment by changing the `dummy` API key and potentially restrict who can access the service via the exposed port (`-p`).
